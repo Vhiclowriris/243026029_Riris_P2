@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riris P2 - Deteksi Objek</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- TensorFlow.js & COCO-SSD -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+</head>
+<body>
+
+    <!-- Status Database -->
+    <div id="db-status" class="status-badge">Memeriksa...</div>
+
+    <!-- Kamera Container -->
+    <div id="camera-container">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas"></canvas>
+
+        <div id="overlay-msg">
+            <div class="spinner"></div>
+            <p id="overlay-text">Memulai Sistem...</p>
+        </div>
+
+        <div id="flash-overlay"></div>
+    </div>
+
+    <!-- Tombol Kontrol -->
+    <div class="controls">
+        <button id="btn-camera" onclick="toggleCamera()">📷 Nyalakan Kamera</button>
+        <button id="btn-switch" onclick="switchCamera()" disabled> Switch</button>
+        <button id="btn-flash" onclick="toggleFlash()" disabled>🔦 Flash</button>
+        <button id="btn-ai" onclick="toggleAI()" disabled>🤖 AI Scan</button>
+        <button id="btn-capture" onclick="capturePhoto()" disabled> Jepret Foto</button>
+    </div>
+
+    <!-- Hasil Deteksi -->
+    <div id="detection-result">
+        <h3> Objek Terdeteksi:</h3>
+        <ul id="object-list"></ul>
+    </div>
+
+    <!-- Gallery Foto -->
+    <div id="photo-gallery">
+        <h3>🖼️ Galeri Foto:</h3>
+        <div id="gallery-container"></div>
+    </div>
+
+    <!-- Load Firebase Config & MockFirestore -->
+    <script type="module" src="firebase.js"></script>
+
+    <!-- Load Main App Logic -->
+    <script src="coba.js"></script>
+
+</body>
+</html>

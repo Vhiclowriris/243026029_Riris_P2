@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #901f6387;
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Status Badge */
+#db-status {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.status-badge.online {
+    background: #28a745;
+    color: white;
+}
+
+.status-badge.demo {
+    background: #ffc107;
+    color: #000;
+}
+
+/* Camera Container */
+#camera-container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 auto;
+    aspect-ratio: 4/3;
+}
+
+#video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Overlay Loading */
+#overlay-msg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 5;
+}
+
+#overlay-msg.hidden {
+    display: none;
+}
+
+/* Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255,255,255,0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Flash Overlay */
+#flash-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+    transition: opacity 0.1s;
+}
+
+#flash-overlay.active {
+    opacity: 0.8;
+}
+
+/* Controls */
+.controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.controls button {
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.controls button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#btn-camera {
+    background: #28a745;
+    color: white;
+}
+
+#btn-camera.active {
+    background: #dc3545;
+}
+
+#btn-switch {
+    background: #6f42c1;
+    color: white;
+}
+
+#btn-flash {
+    background: #fd7e14;
+    color: white;
+}
+
+#btn-flash.active {
+    background: #ffc107;
+    color: #000;
+}
+
+#btn-ai {
+    background: #0dcaf0;
+    color: #000;
+}
+
+#btn-ai.active {
+    background: #20c997;
+    color: #000;
+}
+
+#btn-capture {
+    background: #e83e8c;
+    color: white;
+}
+
+#btn-capture:hover:not(:disabled) {
+    background: #d63384;
+}
+
+/* Detection Result */
+#detection-result {
+    max-width: 640px;
+    margin: 20px auto;
+    background: #169949;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+#detection-result h3 {
+    margin-bottom: 10px;
+    color: #0dcaf0;
+}
+
+#object-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#object-list li {
+    background: #8805c9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #0dcaf0;
+}
+
+#object-list li .confidence {
+    color: #ffc107;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Photo Gallery */
+#photo-gallery {
+    max-width: 640px;
+    margin: 20px auto;
+    background: #5919a7;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+#photo-gallery h3 {
+    margin-bottom: 15px;
+    color: #e83e8c;
+}
+
+#gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #69044e;
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    border-color: #e83e8c;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.gallery-item .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-item .delete-btn:hover {
+    background: #dc3545;
+}
+
+.gallery-item .photo-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    padding: 4px 8px;
+    font-size: 11px;
+    color: white;
+}
+
+/* Capture Flash Animation */
+@keyframes captureFlash {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.capture-flash {
+    animation: captureFlash 0.3s ease-out;
+}
